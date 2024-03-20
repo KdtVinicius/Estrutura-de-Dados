@@ -107,3 +107,34 @@ public class FilaComDuasPilhas<T>
 {
     ...
 }
+
+public class PilhaComDuasFilas<T>
+{
+    private readonly Queue<T> filaPrincipal = new Queue<T>();
+    private readonly Queue<T> filaAuxiliar = new Queue<T>();
+
+    public void Push(T item)
+    {
+        filaPrincipal.Enqueue(item);
+        while (filaAuxiliar.Count > 0)
+        {
+            filaPrincipal.Enqueue(filaAuxiliar.Dequeue());
+        }
+    }
+
+    public T Pop()
+    {
+        while (filaPrincipal.Count > 1)
+        {
+            filaAuxiliar.Enqueue(filaPrincipal.Dequeue());
+        }
+
+        return filaPrincipal.Dequeue();
+    }
+
+    public bool IsEmpty()
+    {
+        return filaPrincipal.Count == 0 && filaAuxiliar.Count == 0;
+    }
+}
+
