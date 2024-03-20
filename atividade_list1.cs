@@ -105,7 +105,31 @@ public class FilaEncadeada<T>
 
 public class FilaComDuasPilhas<T>
 {
-    ...
+    private readonly Stack<T> pilhaPrincipal = new Stack<T>();
+    private readonly Stack<T> pilhaAuxiliar = new Stack<T>();
+
+    public void Enqueue(T item)
+    {
+        pilhaPrincipal.Push(item);
+    }
+
+    public T Dequeue()
+    {
+        if (pilhaAuxiliar.Count == 0)
+        {
+            while (pilhaPrincipal.Count > 0)
+            {
+                pilhaAuxiliar.Push(pilhaPrincipal.Pop());
+            }
+        }
+
+        return pilhaAuxiliar.Pop();
+    }
+
+    public bool IsEmpty()
+    {
+        return pilhaPrincipal.Count == 0 && pilhaAuxiliar.Count == 0;
+    }
 }
 
 public class PilhaComDuasFilas<T>
